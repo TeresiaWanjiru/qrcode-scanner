@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QR Scanner</title>
+
+    <!-- css fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Afacad&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="./node_modules/html5-qrcode/html5-qrcode.min.js"></script>
+    <style>
+      main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* font-family: sans-serif; */
+        font-family: "Afacad", sans-serif;
+      }
+      #reader {
+        width: 600px;
+        border: 2px solid #ccc;
+        padding: 20px;
+        border-radius: 8px;
+        background-color: #fff;
+        text-align: center;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      #result {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div id="reader"></div>
+      <div id="result"></div>
+    </main>
+    <script>
+      /* QR CODE SCANNER */
+      const scanner = new Html5QrcodeScanner("reader", {
+        qrbx: {
+          width: 250,
+          height: 250,
+        },
+        fps: 20,
+      });
+      scanner.render(success, error);
+
+      function success(result) {
+        document.getElementById("result").innerHTML = `
+            <h2>Success</h2>
+            <p><a href="${result}"/>${result}</p>            `;
+
+        scanner.clear();
+        document.getElementById("reader").remove();
+      }
+
+      function error(err) {
+        console.error(err);
+      }
+    </script>
+  </body>
+</html>
